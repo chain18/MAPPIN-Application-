@@ -28,3 +28,30 @@ font-size: 14px;
 .date{
     font-size: 12px;
 }
+
+form{
+    width: 250px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+input,textarea{
+    border: none;
+    border-bottom: 1px solid gray;
+}
+
+input::placeholder,textarea::placeholder{
+    font-size: 12px;
+    color: rgb(184, 184, 184);
+}
+
+.submitButton{
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    background-color: lightgreen;
+    cursor: pointer;
+}
