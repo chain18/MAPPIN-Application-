@@ -55,3 +55,28 @@ input::placeholder,textarea::placeholder{
     background-color: lightgreen;
     cursor: pointer;
 }
+
+.button{
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.logout{
+    background: rgb(236, 137, 7);
+}
+.login{
+    background: rgb(7, 179, 7);
+}
+.register{
+    background: rgb(4, 103, 231);
+    margin-left: 10px;
+}
+
+.buttons,.logout{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}

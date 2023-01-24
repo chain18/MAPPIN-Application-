@@ -6,15 +6,20 @@ import StarIcon from "@mui/icons-material/Star";
 import axios from "axios";
 import { format } from "timeago.js";
 import "./app.css";
+import Register from "./components/Register";
+import Login from "./components/Login";
 
 function App() {
-  const currentUser = "ChainZa";
+  const myStorage = window.localStorage;
+  const [currentUser, setCurrentUser] = useState(myStorage.getItem("user"));
   const [pins, setPins] = useState([]);
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
   const [newPlace, setNewPlace] = useState(null);
   const [title, setTitle] = useState(null);
   const [desc, setDesc] = useState(null);
   const [rating, setRating] = useState(0);
+  const [showRegister, setShowRegister] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
   useEffect(() => {
     const getPins = async () => {
       try {
@@ -27,7 +32,7 @@ function App() {
     getPins();
   }, []);
 
-  const handleMarkerClick = (id, lat, long) => {
+  const handleMarkerClick = (id) => {
     setCurrentPlaceId(id);
   };
 
@@ -59,12 +64,16 @@ function App() {
     }
   };
 
+  const handleLogout = () => {
+    myStorage.removeItem("user");
+    setCurrentUser(null);
+  };
   return (
     <ReactMapGL
       initialViewState={{
-        longitude: 2.294694,
-        latitude: 48.858093,
-        zoom: 4,
+        longitude: 101.49,
+        latitude: 13.054,
+        zoom: 6,
       }}
       style={{ width: "100vw", height: "100vh" }}
       mapStyle="mapbox://styles/mapbox/outdoors-v12"
@@ -99,12 +108,8 @@ function App() {
                 <label>Review</label>
                 <p className="desc">{p.desc}</p>
                 <label>Rating</label>
-                <div className="staers">
-                  <StarIcon className="star" />
-                  <StarIcon className="star" />
-                  <StarIcon className="star" />
-                  <StarIcon className="star" />
-                  <StarIcon className="star" />
+                <div className="stars">
+                  {Array(p.rating).fill(<StarIcon className="star" />)}
                 </div>
                 <label>Information</label>
                 <span className="username">
@@ -149,6 +154,31 @@ function App() {
             </form>
           </div>
         </Popup>
+      )}
+      {currentUser ? (
+        <button className="button logout" onClick={handleLogout}>
+          Log out{" "}
+        </button>
+      ) : (
+        <div className="buttons">
+          <button className="button login" onClick={() => setShowLogin(true)}>
+            Login
+          </button>
+          <button
+            className="button register"
+            onClick={() => setShowRegister(true)}
+          >
+            Register
+          </button>
+        </div>
+      )}
+      {showRegister && <Register setShowRegister={setShowRegister} />}
+      {showLogin && (
+        <Login
+          setShowLogin={setShowLogin}
+          myStorage={myStorage}
+          setCurrentUser={setCurrentUser}
+        />
       )}
     </ReactMapGL>
   );
